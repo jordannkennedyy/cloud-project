@@ -12,7 +12,7 @@ app.set("view engine", "ejs");
 // MySQL Connection
 const mysql = require('mysql')
 const connection = mysql.createConnection({
-  host: 'cloud-databse.cnqs000w27sk.us-east-2.rds.amazonaws.com',
+  host: 'test-database.cnqs000w27sk.us-east-2.rds.amazonaws.com',
   port: 3306,
   user: 'admin',
   password: 'Password',
