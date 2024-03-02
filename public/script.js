@@ -21,3 +21,23 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 });
+
+// Function to get the hostname
+function getHostname() {
+    return window.location.hostname;
+}
+
+// Function to get the IP address
+function getIPAddress() {
+    return window.location.href.split('/')[2];
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Get the hostname and IP address using JavaScript
+    var hostname = getHostname();
+    var ipAddress = getIPAddress();
+
+    // Update the HTML elements with the obtained values
+    document.getElementById("hostname").innerText = hostname;
+    document.getElementById("ipaddress").innerText = ipAddress;
+});
