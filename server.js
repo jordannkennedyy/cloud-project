@@ -12,7 +12,7 @@ app.set("view engine", "ejs");
 // MySQL Connection
 const mysql = require('mysql')
 const connection = mysql.createConnection({
-  host: '3.87.126.217',
+  host: '52.55.45.253',
   port: 3306,
   user: 'root',
 })
