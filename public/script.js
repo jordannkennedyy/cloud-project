@@ -37,15 +37,6 @@ import { EC2 } from 'aws-sdk';
 // Create an EC2 service object
 const ec2 = new EC2();
 
-// Example usage: Describe instances
-ec2.describeInstances((err, data) => {
-  if (err) {
-    console.error('Error:', err);
-  } else {
-    console.log('Data:', data);
-  }
-});
-
 document.addEventListener("DOMContentLoaded", function() {
     // Get the hostname and IP address using JavaScript
     ec2.describeInstances((err, data) => {
