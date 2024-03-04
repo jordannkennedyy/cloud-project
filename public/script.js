@@ -1,3 +1,4 @@
+import { exec } from 'node:child_process';
 //listen for click
 // 'DOMContentLoaded ensures all pages are loaded before it starts to listen'
 // event listener for button
@@ -22,6 +23,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    exec('echo $(hostname)', (err, output) => {
+        if (err) {
+            console.error("could not execute command: ", err);
+            return;
+        }
+        var hostname = output;
+        document.getElementById("hostname").innerText = hostname;
+    });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    exec("echo $(hostname -I | awk '{print $1}')", (err, output) => {
+        if (err) {
+            console.error("could not execute command: ", err);
+            return;
+        }
+        var ip = output;
+        document.getElementById("IP").innerText = ip;
+    });
+});
+
+
+
+
 // // Function to get the hostname
 // function getHostname() {
 //     return window.location.hostname;
@@ -32,22 +59,22 @@ document.addEventListener('DOMContentLoaded', function() {
 //     return window.location.href.split('/')[2];
 // }
 
-import { EC2 } from 'aws-sdk';
+// import { EC2 } from 'aws-sdk';
 
-// Create an EC2 service object
-const ec2 = new EC2();
+// // Create an EC2 service object
+// const ec2 = new EC2();
 
-document.addEventListener("DOMContentLoaded", function() {
-    // Get the hostname and IP address using JavaScript
-    ec2.describeInstances((err, data) => {
-        if (err) {
-          console.error('Error:', err);
-        } else {
-          var ec2Data = data;
-          document.getElementById("data").innerText = ec2Data;
-        }
-      });
-});
+// document.addEventListener("DOMContentLoaded", function() {
+//     // Get the hostname and IP address using JavaScript
+//     ec2.describeInstances((err, data) => {
+//         if (err) {
+//           console.error('Error:', err);
+//         } else {
+//           var ec2Data = data;
+//           document.getElementById("data").innerText = ec2Data;
+//         }
+//       });
+// });
 
 // document.addEventListener("DOMContentLoaded", function() {
 //     // Get the hostname and IP address using JavaScript
