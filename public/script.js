@@ -1,4 +1,6 @@
-import { exec } from 'node:child_process';
+
+const { response } = require('express');
+
 //listen for click
 // 'DOMContentLoaded ensures all pages are loaded before it starts to listen'
 // event listener for button
@@ -24,26 +26,24 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener("DOMContentLoaded", function() {
-    exec('echo $(hostname)', (err, output) => {
-        if (err) {
-            console.error("could not execute command: ", err);
-            return;
-        }
-        var hostname = output;
-        document.getElementById("hostname").innerText = hostname;
-    });
+    fetch('/EC2hostname')
+    .then(response => response.json())
+    .then(data => {
+        var hostname = document.getElementById("hostname");
+        hostname.innerText = JSON.stringify(data, null, 2)
+    })
+    .catch(error => console.log(error));
 });
 
 
 document.addEventListener("DOMContentLoaded", function() {
-    exec("echo $(hostname -I | awk '{print $1}')", (err, output) => {
-        if (err) {
-            console.error("could not execute command: ", err);
-            return;
-        }
-        var ip = output;
-        document.getElementById("IP").innerText = ip;
-    });
+    fetch('/EC2ip')
+    .then(response => response.json())
+    .then(data => {
+        var hostname = document.getElementById("IP");
+        hostname.innerText = JSON.stringify(data, null, 2)
+    })
+    .catch(error => console.log(error));
 });
 
 

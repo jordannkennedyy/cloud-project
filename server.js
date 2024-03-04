@@ -1,4 +1,5 @@
 const express = require('express');
+const exec = require('child_process');
 
 const app = express();
 const ejsLayouts = require("express-ejs-layouts");
@@ -18,10 +19,12 @@ const connection = mysql.createConnection({
   password: 'Password'
 })
 
+// initial connection
 connection.connect(function(err){
   if (err) throw err;
   console.log("Connected")
 });
+
 
 // Server Setup
 app.use((req, res, next) => {
@@ -30,6 +33,8 @@ app.use((req, res, next) => {
   next();
 });
 
+
+// main
 app.get('', (req, res) => {
     res.render('index', {title: 'Home Page'})
 })
@@ -43,6 +48,30 @@ app.get('/get_data', (req, res) => {
     });
 });
 
+// get host name
+app.get('/EC2Hostname', (req, res) => {
+  exec('echo $(hostname)', (err, output) => {
+    if (err) {
+        console.error("could not execute command: ", err);
+        return;
+    }
+    res.json(output)
+  });
+});
+
+// get host name
+app.get('/EC2ip', (req, res) => {
+  exec("echo $(hostname -I | awk '{print $1}')", (err, output) => {
+    if (err) {
+        console.error("could not execute command: ", err);
+        return;
+    }
+    res.json(output)
+  });
+});
+
+
+// start app
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
