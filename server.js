@@ -55,7 +55,7 @@ app.get('/EC2Hostname', (req, res) => {
         console.error("could not execute command: ", err);
         return;
     }
-    res.json(output)
+    res.send(output)
   });
 });
 
@@ -66,7 +66,7 @@ app.get('/EC2ip', (req, res) => {
         console.error("could not execute command: ", err);
         return;
     }
-    res.json(output)
+    res.send(output)
   });
 });
 

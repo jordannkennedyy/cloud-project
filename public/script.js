@@ -1,13 +1,8 @@
-
-const { response } = require('express');
-
 //listen for click
 // 'DOMContentLoaded ensures all pages are loaded before it starts to listen'
 // event listener for button
 // on click, it will fetch /get_data endpoint, triggering the MySQL query, collect the response from MYSQL
 // then add the data to innerHTML of the 'addData' element in index.ejs
-
-
 
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -27,10 +22,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener("DOMContentLoaded", function() {
     fetch('/EC2hostname')
-    .then(response => response.json())
+    .then(response => response.text())
     .then(data => {
         var hostname = document.getElementById("hostname");
-        hostname.innerText = JSON.stringify(data, null, 2)
+        hostname.innerText = data;
     })
     .catch(error => console.log(error));
 });
@@ -38,10 +33,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
 document.addEventListener("DOMContentLoaded", function() {
     fetch('/EC2ip')
-    .then(response => response.json())
+    .then(response => response.text())
     .then(data => {
         var hostname = document.getElementById("IP");
-        hostname.innerText = JSON.stringify(data, null, 2)
+        hostname.innerText = data;
     })
     .catch(error => console.log(error));
 });
