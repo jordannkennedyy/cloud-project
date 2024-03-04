@@ -1,5 +1,5 @@
 const express = require('express');
-const { spawn } = require('node:child_process');
+const { exec } = require('node:child_process');
 
 const app = express();
 const ejsLayouts = require("express-ejs-layouts");
@@ -11,7 +11,8 @@ app.set("view engine", "ejs");
 
 
 // MySQL Connection
-const mysql = require('mysql')
+const mysql = require('mysql');
+const { stdout, stderr } = require('node:process');
 const connection = mysql.createConnection({
   host: 'NEW-LOAD-BALANCE-ad0db12a5863bb78.elb.us-east-1.amazonaws.com',
   port: 3306,
@@ -50,20 +51,18 @@ app.get('/get_data', (req, res) => {
 
 // get host name
 app.get('/EC2Hostname', (req, res) => {
-  const input = spawn('echo $(hostname)');
-
-  input.stdout.on('data', (data) => {
-    res.send(data);
-    });
+  exec('echo $(hostname)', (error, stdout, stderr) => {
+    if (error) return error
+    res.send(stdout)
+  });
 });
 
 // get host name
 app.get('/EC2ip', (req, res) => {
-  const input = spawn("echo $(hostname -I | awk '{print $1}')");
-
-  input.stdout.on('data', (data) => {
-    res.send(data);
-    });
+  exec("echo $(hostname -I | awk '{print $1}')", (error, stdout, stderr) => {
+    if (error) return error
+    res.send(stdout)
+  });
 });
 
 
