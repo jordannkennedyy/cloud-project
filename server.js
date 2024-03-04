@@ -23,7 +23,6 @@ connection.connect(function(err){
   console.log("Connected")
 });
 
-
 // Server Setup
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');

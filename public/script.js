@@ -22,22 +22,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-// Function to get the hostname
-function getHostname() {
-    return window.location.hostname;
-}
+// // Function to get the hostname
+// function getHostname() {
+//     return window.location.hostname;
+// }
 
-// Function to get the IP address
-function getIPAddress() {
-    return window.location.href.split('/')[2];
-}
+// // Function to get the IP address
+// function getIPAddress() {
+//     return window.location.href.split('/')[2];
+// }
+
+import { EC2 } from 'aws-sdk';
+
+// Create an EC2 service object
+const ec2 = new EC2();
+
+// Example usage: Describe instances
+ec2.describeInstances((err, data) => {
+  if (err) {
+    console.error('Error:', err);
+  } else {
+    console.log('Data:', data);
+  }
+});
 
 document.addEventListener("DOMContentLoaded", function() {
     // Get the hostname and IP address using JavaScript
-    var hostname = getHostname();
-    var ipAddress = getIPAddress();
-
-    // Update the HTML elements with the obtained values
-    document.getElementById("hostname").innerText = hostname;
-    document.getElementById("ipaddress").innerText = ipAddress;
+    ec2.describeInstances((err, data) => {
+        if (err) {
+          console.error('Error:', err);
+        } else {
+          var ec2Data = data;
+          document.getElementById("data").innerText = ec2Data;
+        }
+      });
 });
+
+// document.addEventListener("DOMContentLoaded", function() {
+//     // Get the hostname and IP address using JavaScript
+//     var hostname = getHostname();
+//     var ipAddress = getIPAddress();
+
+//     // Update the HTML elements with the obtained values
+//     document.getElementById("hostname").innerText = hostname;
+//     document.getElementById("ipaddress").innerText = ipAddress;
+// });
