@@ -1,5 +1,5 @@
 const express = require('express');
-const exec = require('child_process');
+const { spawn } = require('node:child_process');
 
 const app = express();
 const ejsLayouts = require("express-ejs-layouts");
@@ -50,24 +50,20 @@ app.get('/get_data', (req, res) => {
 
 // get host name
 app.get('/EC2Hostname', (req, res) => {
-  exec('echo $(hostname)', (err, output) => {
-    if (err) {
-        console.error("could not execute command: ", err);
-        return;
-    }
-    res.send(output)
-  });
+  const input = spawn('echo $(hostname)');
+
+  input.stdout.on('data', (data) => {
+    res.send(data);
+    });
 });
 
 // get host name
 app.get('/EC2ip', (req, res) => {
-  exec("echo $(hostname -I | awk '{print $1}')", (err, output) => {
-    if (err) {
-        console.error("could not execute command: ", err);
-        return;
-    }
-    res.send(output)
-  });
+  const input = spawn("echo $(hostname -I | awk '{print $1}')");
+
+  input.stdout.on('data', (data) => {
+    res.send(data);
+    });
 });
 
 
